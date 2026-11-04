@@ -1,7 +1,7 @@
-import { prisma } from "../../config/database.js";
-import { AppError } from "../../shared/utils/app-error.js";
-import type { DirectorQueryDto } from "./dto/director.dto.js";
-import type { PaginatedResult } from "../../shared/types/common.js";
+import { prisma } from "../../../config/database.js";
+import { AppError } from "../../../shared/utils/app-error.js";
+import type { DirectorQueryDto } from "../dto/director.dto.js";
+import type { PaginatedResult } from "../../../shared/types/common.js";
 
 export class DirectorService {
   async create(data: {

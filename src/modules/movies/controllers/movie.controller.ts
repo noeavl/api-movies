@@ -3,7 +3,8 @@ import { movieService } from "../services/movie.service.js";
 import { successResponse } from "../../../shared/utils/api-response.js";
 import { asyncHandler } from "../../../shared/middlewares/error-handler.js";
 import { validate, validateQuery, validateParams } from "../../../shared/middlewares/validate.js";
-import { createMovieSchema, updateMovieSchema, movieQuerySchema, uuidSchema } from "../dto/movie.dto.js";
+import { createMovieSchema, updateMovieSchema, movieQuerySchema } from "../dto/movie.dto.js";
+import { uuidSchema } from "../../../shared/types/common.js";
 
 export class MovieController {
   create = asyncHandler(async (req: Request, res: Response) => {
@@ -17,17 +18,17 @@ export class MovieController {
   });
 
   findById = asyncHandler(async (req: Request, res: Response) => {
-    const movie = await movieService.findById(req.params.id);
+    const movie = await movieService.findById(req.params.id as string);
     res.json(successResponse(movie));
   });
 
   update = asyncHandler(async (req: Request, res: Response) => {
-    const movie = await movieService.update(req.params.id, req.body);
+    const movie = await movieService.update(req.params.id as string, req.body);
     res.json(successResponse(movie));
   });
 
   delete = asyncHandler(async (req: Request, res: Response) => {
-    await movieService.delete(req.params.id);
+    await movieService.delete(req.params.id as string);
     res.status(204).send();
   });
 }

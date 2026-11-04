@@ -20,7 +20,8 @@ export function validate(schema: ZodSchema) {
 export function validateQuery(schema: ZodSchema) {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {
-      req.query = schema.parse(req.query);
+      const parsed = schema.parse(req.query);
+      Object.assign(req.query, parsed);
       next();
     } catch (err) {
       if (err instanceof ZodError) {
@@ -35,7 +36,8 @@ export function validateQuery(schema: ZodSchema) {
 export function validateParams(schema: ZodSchema) {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {
-      req.params = schema.parse(req.params);
+      const parsed = schema.parse(req.params);
+      Object.assign(req.params, parsed);
       next();
     } catch (err) {
       if (err instanceof ZodError) {

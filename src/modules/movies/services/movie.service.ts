@@ -1,7 +1,7 @@
-import { prisma } from "../../config/database.js";
-import { AppError } from "../../shared/utils/app-error.js";
-import type { MovieQueryDto } from "./dto/movie.dto.js";
-import type { PaginatedResult } from "../../shared/types/common.js";
+import { prisma } from "../../../config/database.js";
+import { AppError } from "../../../shared/utils/app-error.js";
+import type { MovieQueryDto } from "../dto/movie.dto.js";
+import type { PaginatedResult } from "../../../shared/types/common.js";
 
 export class MovieService {
   async create(data: {
