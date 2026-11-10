@@ -21,7 +21,14 @@ export function validateQuery(schema: ZodSchema) {
   return (req: Request, _res: Response, next: NextFunction) => {
     try {
       const parsed = schema.parse(req.query);
-      Object.assign(req.query, parsed);
+      // Express 5: req.query es un getter, Object.assign no persiste.
+      // Redefinimos la propiedad con los valores parseados (incluye defaults de zod).
+      Object.defineProperty(req, "query", {
+        value: parsed,
+        writable: true,
+        configurable: true,
+        enumerable: true,
+      });
       next();
     } catch (err) {
       if (err instanceof ZodError) {

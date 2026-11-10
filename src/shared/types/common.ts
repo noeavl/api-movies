@@ -1,6 +1,9 @@
 import { z } from "zod";
 
-export const uuidSchema = z.string().uuid({ message: "ID inválido" });
+// validateParams parsea req.params (objeto { id }), no un string suelto
+export const uuidSchema = z.object({
+  id: z.string().uuid({ message: "ID inválido" }),
+});
 
 export const paginationSchema = z.object({
   page: z.coerce.number().int().positive().default(1),

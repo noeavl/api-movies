@@ -43,3 +43,10 @@ prisma/migrations/.migration_lock.toml
 *.pem
 .vercel
 .netlify
+
+# Playwright CLI (capturas y artefactos de pruebas)
+.playwright-cli/
+
+# Proyecto pnpm: lockfiles de otros gestores
+package-lock.json
+yarn.lock

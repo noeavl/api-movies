@@ -28,7 +28,7 @@ export class MovieService {
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (search) where.title = { contains: search, mode: "insensitive" };
+    if (search) where.title = { contains: search };
     if (categoryId) where.categoryId = categoryId;
     if (directorId) where.directorId = directorId;
     if (releaseYear) where.releaseYear = releaseYear;

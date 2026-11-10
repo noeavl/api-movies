@@ -1,6 +1,6 @@
 # API Movies
 
-API modular para gestión de películas, directores y categorías construida con Express, TypeScript, Prisma y PostgreSQL.
+API modular para gestión de películas, directores y categorías construida con Express, TypeScript, Prisma y MySQL.
 
 ## Arquitectura
 
@@ -49,7 +49,6 @@ src/
 | `pnpm start`                     | Ejecuta `dist/server.js` (producción)             |
 | `pnpm run prisma:generate`       | Genera Prisma Client                              |
 | `pnpm run prisma:migrate`        | Ejecuta migraciones en desarrollo                 |
-| `pnpm run prisma:migrate:deploy` | Aplica migraciones en producción                  |
 | `pnpm run prisma:studio`         | Abre Prisma Studio (UI visual)                    |
 | `pnpm run prisma:push`           | Sincroniza schema sin migraciones                 |
 | `pnpm run lint`                  | Ejecuta ESLint                                    |
@@ -59,7 +58,7 @@ src/
 Copia `.env.example` a `.env` y configura:
 
 ```env
-DATABASE_URL="postgresql://user:password@localhost:5432/api_movies?schema=public"
+DATABASE_URL="mysql://root:root@localhost:3306/api_movies"
 PORT=3000
 NODE_ENV=development
 JWT_SECRET="your-secret-key"
@@ -114,28 +113,33 @@ model Movie {
 ## Setup inicial
 
 ```bash
-# Instalar dependencias
+# 1. MySQL 8 en Docker (si no lo tienes ya)
+docker run -d --name mysql-movies --restart unless-stopped \
+  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=api_movies \
+  -v mysql_movies_data:/var/lib/mysql mysql:8
+
+# 2. Instalar dependencias
 pnpm install
 
-# Configurar .env
-cp .env.example .env
-# Editar DATABASE_URL
+# 3. Configurar .env
+cp .env.example .env   # con el contenedor de arriba, el ejemplo ya funciona tal cual
 
-
-# Generar Prisma Client y crear migración inicial
+# 4. Generar Prisma Client y aplicar migraciones
 pnpm run prisma:generate
-pnpm run prisma:migrate -- --name init
+pnpm exec prisma migrate deploy
 
-# Desarrollo
+# 5. Desarrollo (http://localhost:3000/api, health en /api/health)
 pnpm run dev
 ```
+
+La base arranca vacía: crea categorías, directores y películas desde Swagger UI (`http://localhost:3000/api/docs`) o con `POST /api/categories`, `POST /api/directors` y `POST /api/movies`.
 
 ## Tech Stack
 
 - **Runtime**: Node.js 20+ (ESM)
 - **Framework**: Express 5
 - **Language**: TypeScript 5 (strict mode)
-- **ORM**: Prisma 5 (PostgreSQL)
+- **ORM**: Prisma 5 (MySQL 8)
 - **Validación**: Zod 4
 - **Docs**: swagger-jsdoc + swagger-ui-express
 - **Dev**: tsx (hot reload), tsc (build)

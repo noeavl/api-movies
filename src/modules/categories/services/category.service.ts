@@ -13,7 +13,7 @@ export class CategoryService {
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (search) where.name = { contains: search, mode: "insensitive" };
+    if (search) where.name = { contains: search };
 
     const [data, total] = await Promise.all([
       prisma.category.findMany({

@@ -18,8 +18,8 @@ export class DirectorService {
     const skip = (page - 1) * limit;
 
     const where: any = {};
-    if (search) where.name = { contains: search, mode: "insensitive" };
-    if (nationality) where.nationality = { contains: nationality, mode: "insensitive" };
+    if (search) where.name = { contains: search };
+    if (nationality) where.nationality = { contains: nationality };
 
     const [data, total] = await Promise.all([
       prisma.director.findMany({
