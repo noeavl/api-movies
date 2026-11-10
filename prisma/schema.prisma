@@ -3,52 +3,48 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
 model Category {
-  id          String    @id @default(uuid())
-  name        String    @unique
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  movies      Movie[]
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  movies Movie[]
 
   @@map("categories")
 }
 
 model Director {
-  id          String   @id @default(uuid())
-  name        String
-  bio         String?
-  birthDate   DateTime?
-  nationality String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  movies      Movie[]
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  movies Movie[]
 
   @@map("directors")
 }
 
 model Movie {
-  id          String   @id @default(uuid())
-  title       String
-  synopsis    String?
-  releaseYear Int
-  duration    Int?     // en minutos
-  posterUrl   String?
-  rating      Float?   @default(0)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id       String  @id @default(uuid())
+  title    String
+  duration Int
+  synopsis String?
 
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id])
-  directorId  String
-  director    Director @relation(fields: [directorId], references: [id])
+  directorId String
+  director   Director @relation(fields: [directorId], references: [id])
 
-  @@index([categoryId])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   @@index([directorId])
-  @@index([releaseYear])
+  @@index([categoryId])
   @@map("movies")
 }

@@ -42,17 +42,17 @@ src/
 
 ## Scripts
 
-| Comando | Descripción |
-|---------|-------------|
-| `pnpm run dev` | Servidor en desarrollo con hot-reload (tsx watch) |
-| `pnpm run build` | Compila TypeScript a `dist/` |
-| `pnpm start` | Ejecuta `dist/server.js` (producción) |
-| `pnpm run prisma:generate` | Genera Prisma Client |
-| `pnpm run prisma:migrate` | Ejecuta migraciones en desarrollo |
-| `pnpm run prisma:migrate:deploy` | Aplica migraciones en producción |
-| `pnpm run prisma:studio` | Abre Prisma Studio (UI visual) |
-| `pnpm run prisma:push` | Sincroniza schema sin migraciones |
-| `pnpm run lint` | Ejecuta ESLint |
+| Comando                          | Descripción                                       |
+| -------------------------------- | ------------------------------------------------- |
+| `pnpm run dev`                   | Servidor en desarrollo con hot-reload (tsx watch) |
+| `pnpm run build`                 | Compila TypeScript a `dist/`                      |
+| `pnpm start`                     | Ejecuta `dist/server.js` (producción)             |
+| `pnpm run prisma:generate`       | Genera Prisma Client                              |
+| `pnpm run prisma:migrate`        | Ejecuta migraciones en desarrollo                 |
+| `pnpm run prisma:migrate:deploy` | Aplica migraciones en producción                  |
+| `pnpm run prisma:studio`         | Abre Prisma Studio (UI visual)                    |
+| `pnpm run prisma:push`           | Sincroniza schema sin migraciones                 |
+| `pnpm run lint`                  | Ejecuta ESLint                                    |
 
 ## Variables de entorno
 
@@ -71,6 +71,7 @@ JWT_EXPIRES_IN="7d"
 Swagger UI disponible en: `http://localhost:3000/api/docs`
 
 Incluye:
+
 - Todos los endpoints con parámetros y schemas
 - Modelos de datos (Movie, Director, Category, DTOs)
 - Autenticación Bearer (JWT)
@@ -119,6 +120,7 @@ pnpm install
 # Configurar .env
 cp .env.example .env
 # Editar DATABASE_URL
+
 
 # Generar Prisma Client y crear migración inicial
 pnpm run prisma:generate
